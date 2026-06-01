@@ -27,3 +27,4 @@ def arima(prices: pd.Series, order: tuple = (5, 1, 2), forecast_days: int = 10) 
         lines.append(f"t+{i:02d} ({date.date()}): {val:.4f}  ({chg:+.4f})")
     
     print("\n".join(lines))
+    return "\n".join(lines)

@@ -42,3 +42,4 @@ def kalman(prices: pd.Series, process_var: float = 1e-5, measurement_var: float 
     lines.append(tail.to_string())
     
     print("\n".join(lines))
+    return "\n".join(lines)
