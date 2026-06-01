@@ -13,8 +13,8 @@ def cubic_spline_predict(prices: np.ndarray, future_days: int = 30) -> np.ndarra
         t_knots = np.arange(n, dtype=float)
         y_knots = prices.copy()
 
-    m = len(t_knots)   # number of knots
-    h = np.diff(t_knots)  # interval widths 
+    m = len(t_knots)
+    h = np.diff(t_knots)
 
     A = np.zeros((m, m))
     r = np.zeros(m)
@@ -26,8 +26,7 @@ def cubic_spline_predict(prices: np.ndarray, future_days: int = 30) -> np.ndarra
         A[i, i - 1] = h[i - 1]
         A[i, i]     = 2.0 * (h[i - 1] + h[i])
         A[i, i + 1] = h[i]
-        r[i] = 6.0 * ((y_knots[i + 1] - y_knots[i]) / h[i]
-                     - (y_knots[i]     - y_knots[i - 1]) / h[i - 1])
+        r[i] = 6.0 * ((y_knots[i + 1] - y_knots[i]) / h[i] - (y_knots[i] - y_knots[i - 1]) / h[i - 1])
 
     sigma = np.linalg.solve(A, r)  
 

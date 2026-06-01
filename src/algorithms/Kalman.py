@@ -6,8 +6,8 @@ def kalman(prices: pd.Series, process_var: float = 1e-5, measurement_var: float 
         prices = pd.Series(prices)
     n = len(prices)
     vals = prices.values
-    x_est = np.zeros(n)   # estimación del estado
-    p_est = np.zeros(n)   # estimación del error
+    x_est = np.zeros(n)
+    p_est = np.zeros(n)
  
     x_est[0] = vals[0]
     p_est[0] = 1.0
@@ -32,9 +32,9 @@ def kalman(prices: pd.Series, process_var: float = 1e-5, measurement_var: float 
         f"\n{'='*50}",
         f"  Filtro de Kalman (1D)",
         f"{'='*50}",
-        f"  Proceso σ²     : {process_var}",
-        f"  Medición σ²    : {measurement_var}",
-        f"  Precio raw     : {last_raw:.4f}",
+        f"  Proceso σ² : {process_var}",
+        f"  Medición σ² : {measurement_var}",
+        f"  Precio raw : {last_raw:.4f}",
         f"  Precio filtrado: {last_smoothed:.4f}",
         f"  Ruido estimado : {noise:+.4f}",
         f"  Última ganancia K: {last_gain:.6f}",

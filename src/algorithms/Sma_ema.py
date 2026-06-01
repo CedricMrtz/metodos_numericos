@@ -22,9 +22,9 @@ def sma_ema(prices: pd.Series, period: int = 20) -> tuple:
         f"\n{'='*50}",
         f"  SMA / EMA  (periodo = {period})",
         f"{'='*50}",
-        f"  Precio actual : {last_price:.4f}",
-        f"  SMA({period}) : {last_sma:.4f}  → señal {signal_sma}",
-        f"  EMA({period}) : {last_ema:.4f}  → señal {signal_ema}",
+        f"Precio actual : {last_price:.4f}",
+        f"SMA({period}) : {last_sma:.4f} -> señal {signal_sma}",
+        f"EMA({period}) : {last_ema:.4f} -> señal {signal_ema}",
         f"\n  Últimos 5 días:",
     ]
     tail = pd.DataFrame({"Precio": prices, f"SMA_{period}": sma, f"EMA_{period}": ema}).tail(5)

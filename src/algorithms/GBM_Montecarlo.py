@@ -15,15 +15,15 @@ def gbm_montecarlo_predict(
 
     log_returns = np.log(prices[1:] / prices[:-1])
  
-    mu = np.mean(log_returns)          # daily drift
-    sigma = np.std(log_returns, ddof=1)   # daily volatility (sample std)
+    mu = np.mean(log_returns)
+    sigma = np.std(log_returns, ddof=1)
  
     print(f"[gbm_montecarlo] μ (daily drift) = {mu:.6f}, "
           f"σ (daily vol) = {sigma:.6f}, "
           f"S₀ = {prices[-1]:.2f}")
  
     S0 = prices[-1]
-    dt = 1.0   # one trading day per step
+    dt = 1.0 
  
     Z = np.random.standard_normal((simulations, future_days))
  
@@ -35,15 +35,15 @@ def gbm_montecarlo_predict(
     mean_path  = np.mean(all_paths, axis=0)
  
     alpha = 1.0 - confidence
-    lower_band = np.percentile(all_paths, 100 * alpha / 2,       axis=0)
+    lower_band = np.percentile(all_paths, 100 * alpha / 2, axis=0)
     upper_band = np.percentile(all_paths, 100 * (1 - alpha / 2), axis=0)
  
     return {
-        "mean":      mean_path,
-        "lower":     lower_band,
-        "upper":     upper_band,
+        "mean": mean_path,
+        "lower": lower_band,
+        "upper": upper_band,
         "all_paths": all_paths,
-        "mu":        mu,
-        "sigma":     sigma,
-        "S0":        S0,
+        "mu": mu,
+        "sigma": sigma,
+        "S0": S0,
     }
