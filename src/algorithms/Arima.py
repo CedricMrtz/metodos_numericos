@@ -15,7 +15,7 @@ def arima(prices: pd.Series, order: tuple = (5, 1, 2), forecast_days: int = 30) 
  
     lines = [
         f"\n{'='*50}",
-        f"  ARIMA{order}",
+        f"ARIMA{order}",
         f"{'='*50}",
         f"Ultimo precio : {last_price:.4f} (t={last_date})",
         f"AIC : {result.aic:.2f}",
