@@ -1,7 +1,7 @@
 from statsmodels.tsa.arima.model import ARIMA
 import pandas as pd
 
-def arima(prices: pd.Series, order: tuple = (5, 1, 2), forecast_days: int = 10) -> str:
+def arima(prices: pd.Series, order: tuple = (5, 1, 2), forecast_days: int = 30) -> tuple:
     model   = ARIMA(prices, order=order)
     result  = model.fit()
     forecast = result.forecast(steps=forecast_days)

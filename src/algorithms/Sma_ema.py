@@ -1,6 +1,6 @@
 import pandas as pd
 
-def sma_ema(prices: pd.Series, period: int = 20) -> str:
+def sma_ema(prices: pd.Series, period: int = 20) -> tuple:
     sma = prices.rolling(window=period).mean()
     ema = prices.ewm(span=period, adjust=False).mean()
  

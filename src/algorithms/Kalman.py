@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-def kalman(prices: pd.Series, process_var: float = 1e-5, measurement_var: float = 0.1) -> str:
+def kalman(prices: pd.Series, process_var: float = 1e-5, measurement_var: float = 0.1) -> tuple:
     if not isinstance(prices, pd.Series):
         prices = pd.Series(prices)
     n = len(prices)
