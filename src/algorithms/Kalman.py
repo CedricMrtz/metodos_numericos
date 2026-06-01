@@ -25,12 +25,12 @@ def kalman(prices: pd.Series, process_var: float = 1e-5, measurement_var: float 
  
     last_raw  = vals[-1]
     last_smoothed = x_est[-1]
-    last_gain = K  # última ganancia
+    last_gain = K 
     noise = last_raw - last_smoothed
  
     lines = [
         f"\n{'='*50}",
-        f"  Filtro de Kalman (1D)",
+        f"Filtro de Kalman",
         f"{'='*50}",
         f"  Proceso σ² : {process_var}",
         f"  Medición σ² : {measurement_var}",
