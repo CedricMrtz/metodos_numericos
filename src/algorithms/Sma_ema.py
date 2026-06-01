@@ -30,5 +30,4 @@ def sma_ema(prices: pd.Series, period: int = 20) -> str:
     tail = pd.DataFrame({"Precio": prices, f"SMA_{period}": sma, f"EMA_{period}": ema}).tail(5)
     lines.append(tail.to_string())
 
-    print("\n".join(lines))
-    return "\n".join(lines)
+    return "\n".join(lines), sma.values, ema.values

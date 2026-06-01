@@ -2,6 +2,9 @@ import numpy as np
 from algorithms.linealRegression import linear_regression_predict
 from algorithms.CubicSplineInterpolation import cubic_spline_predict
 from algorithms.GBM_Montecarlo import gbm_montecarlo_predict
+from algorithms.Kalman import kalman
+from algorithms.Sma_ema import sma_ema
+from algorithms.Arima import arima
 from utils.extract_stock import extract_stock
 
 
@@ -16,27 +19,44 @@ DEFAULT_SEED = 42
 
 def run_on_prices(prices, future_days=30, simulations=1000, confidence=0.95, seed=42):
     print("=" * 60)
+    print("0. KALMAN FILTER")
+    text, smoothed_prices = kalman(prices)
+    print(text)
+
+    print("=" * 60)
     print("1. LINEAR REGRESSION")
-    lr_pred = linear_regression_predict(prices, future_days=future_days)
+    lr_pred = linear_regression_predict(smoothed_prices, future_days=future_days)
     print(f"   Day+1  = ${lr_pred[0]:.2f}   Day+{future_days} = ${lr_pred[-1]:.2f}")
 
     print("=" * 60)
     print("2. CUBIC SPLINE")
-    cs_pred = cubic_spline_predict(prices, future_days=future_days)
+    cs_pred = cubic_spline_predict(smoothed_prices, future_days=future_days)
     print(f"   Day+1  = ${cs_pred[0]:.2f}   Day+{future_days} = ${cs_pred[-1]:.2f}")
 
     print("=" * 60)
     print("3. GBM + MONTE CARLO")
     gbm = gbm_montecarlo_predict(
-        prices,
+        smoothed_prices,
         future_days=future_days,
         simulations=simulations,
         confidence=confidence,
         seed=seed,
     )
-    print(f"   Mean Day+1  = ${gbm['mean'][0]:.2f}   Day+{future_days} = ${gbm['mean'][-1]:.2f}")
-    print(f"   {int(confidence*100)}% CI Day+{future_days}: [${gbm['lower'][-1]:.2f}, ${gbm['upper'][-1]:.2f}]")
-    print(f"   Paths shape: {gbm['all_paths'].shape}")
+    print(f"Mean Day+1  = ${gbm['mean'][0]:.2f}   Day+{future_days} = ${gbm['mean'][-1]:.2f}")
+    print(f"{int(confidence*100)}% CI Day+{future_days}: [${gbm['lower'][-1]:.2f}, ${gbm['upper'][-1]:.2f}]")
+    print(f"Paths shape: {gbm['all_paths'].shape}")
+
+    print("=" * 60)
+    print("4. ARIMA")
+    text, arima_pred = arima(smoothed_prices)
+    print(text)
+    print(f"   Day+1  = ${arima_pred[0]:.2f}   Day+{future_days} = ${arima_pred[-1]:.2f}")
+
+    print("=" * 60)
+    print("5. SMA & EMA")
+    text, sma, ema = sma_ema(smoothed_prices)
+    print(text)
+    print(f"   Last SMA  = ${sma[-1]:.2f}   Last EMA = ${ema[-1]:.2f}")
 
 
 def main():

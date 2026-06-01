@@ -17,14 +17,13 @@ def arima(prices: pd.Series, order: tuple = (5, 1, 2), forecast_days: int = 10) 
         f"\n{'='*50}",
         f"  ARIMA{order}",
         f"{'='*50}",
-        f"  Último precio  : {last_price:.4f}  ({last_date.date()})",
+        f"  Ultimo precio  : {last_price:.4f}  (t={last_date})",
         f"  AIC            : {result.aic:.2f}",
         f"  Tendencia pred : {trend}",
         f"\n  Predicción próximos {forecast_days} días:",
     ]
-    for i, (date, val) in enumerate(forecast.items(), 1):
+    for i, val in enumerate(forecast.values, 1):
         chg = val - last_price
-        lines.append(f"t+{i:02d} ({date.date()}): {val:.4f}  ({chg:+.4f})")
+        lines.append(f"t+{i:02d} : {val:.4f}  ({chg:+.4f})")
     
-    print("\n".join(lines))
-    return "\n".join(lines)
+    return "\n".join(lines), forecast.values

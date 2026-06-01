@@ -2,6 +2,8 @@ import numpy as np
 import pandas as pd
 
 def kalman(prices: pd.Series, process_var: float = 1e-5, measurement_var: float = 0.1) -> str:
+    if not isinstance(prices, pd.Series):
+        prices = pd.Series(prices)
     n = len(prices)
     vals = prices.values
     x_est = np.zeros(n)   # estimación del estado
@@ -41,5 +43,4 @@ def kalman(prices: pd.Series, process_var: float = 1e-5, measurement_var: float 
     tail = pd.DataFrame({"Raw": prices, "Kalman": smoothed}).tail(5)
     lines.append(tail.to_string())
     
-    print("\n".join(lines))
-    return "\n".join(lines)
+    return "\n".join(lines), smoothed
